@@ -4,6 +4,7 @@
 
 #include "CoffeeMachine.h"
 #include <vector>
+#include <iostream>
 
 const std::map<INGREDIENTS, double> createPriceMap() {
   const std::map<INGREDIENTS , double> ingredientPriceMap = {
@@ -56,11 +57,13 @@ const std::map<INGREDIENTS, double> CoffeeMachine::ingredientPrices =
     createPriceMap();
 
 CoffeeMachine::CoffeeMachine() {
-
-  /*this->drinks = new Drink[6];
-  for () {
-
-  }*/
+  // stock all inventory levels to 10 parts each
+  for (auto placeholder = ingredientPrices.begin();
+       placeholder != ingredientPrices.end(); ++placeholder) {
+    Inventory.insert(std::pair<INGREDIENTS, int>(placeholder->first, 10));
+  }
+  // display inventory on machine startup
+  this->displayInventory();
 }
 
 CoffeeMachine::~CoffeeMachine() {
@@ -71,10 +74,42 @@ CoffeeMachine::~CoffeeMachine() {
   }*/
 }
 
-void CoffeeMachine::displayInventory() {
-  /*for (Drink* d : drinks) {
-    d->print();
-  }*/
+void CoffeeMachine::processInput(std::string userInput) {
+  if (userInput == "r") {
+    this->restock();
+  } else if (userInput == "q") {
+    exit(0);
+  } else {
+    switch (std::atoi(userInput.c_str())) {
+    case 1: {
+      this->makeDrink(DRINKS::coffee);
+      break;
+    }
+    case 2: {
+      this->makeDrink(DRINKS::decafCoffee);
+      break;
+    }
+    case 3: {
+      this->makeDrink(DRINKS::caffeLatte);
+      break;
+    }
+    case 4: {
+      this->makeDrink(DRINKS::caffeAmericano);
+      break;
+    }
+    case 5: {
+      this->makeDrink(DRINKS::caffeeMocha);
+      break;
+    }
+    case 6: {
+      this->makeDrink(DRINKS::cappuccino);
+      break;
+    }
+    default:
+      // TODO(mapope): determine if string input is a valid number
+      std::cout << "Invalid selection: " << userInput << std::endl;
+    }
+  }
 }
 
 void CoffeeMachine::restock() const {

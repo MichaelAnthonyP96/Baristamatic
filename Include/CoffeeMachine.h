@@ -40,11 +40,13 @@ public:
 
   void makeDrink(Drink *d);
   void displayInventory();
-  void restock() const;
+  void displayMenu();
+  void restock();
+  void processInput(std::string userInput);
 
 private:
   Drink *drinks;
-  std::map<std::string, int> Inventory;
+  std::map<INGREDIENTS, int> Inventory;
   static const std::map<DRINKS , std::vector<INGREDIENTS>> recipes;
   static const std::map<INGREDIENTS , double> ingredientPrices;
 };
