@@ -56,6 +56,65 @@ const std::map<DRINKS, std::vector<INGREDIENTS>> CoffeeMachine::recipes = create
 const std::map<INGREDIENTS, double> CoffeeMachine::ingredientPrices =
     createPriceMap();
 
+std::string drink2string(DRINKS d) {
+  switch (d) {
+  case DRINKS::coffee: {
+    return "Coffee";
+  }
+  case DRINKS::decafCoffee: {
+    return "Decaf Coffee";
+  }
+  case DRINKS::caffeLatte: {
+    return "Caffe Latte";
+  }
+  case DRINKS::caffeAmericano: {
+    return "Caffe Americano";
+  }
+  case DRINKS::caffeeMocha: {
+    return "Caffe Mocha";
+  }
+  case DRINKS::cappuccino: {
+    return "Cappuccino";
+  }
+  default:
+    throw std::exception();
+  }
+}
+
+std::string ingredient2string(INGREDIENTS i) {
+  switch (i) {
+  case INGREDIENTS::Coffee: {
+    return "Coffee";
+  }
+  case INGREDIENTS::DecafCoffee: {
+    return "Decaf Coffee";
+  }
+  case INGREDIENTS::WhippedCream: {
+    return "Whipped Cream";
+  }
+  case INGREDIENTS::Cocoa: {
+    return "Cocoa";
+  }
+  case INGREDIENTS::Espresso: {
+    return "Espresso";
+  }
+  case INGREDIENTS::Sugar: {
+    return "Sugar";
+  }
+  case INGREDIENTS::Cream: {
+    return "Cream";
+  }
+  case INGREDIENTS::SteamedMilk: {
+    return "Steamed Milk";
+  }
+  case INGREDIENTS::FoamedMilk: {
+    return "Foamed Milk";
+  }
+  default:
+    throw std::exception();
+  }
+}
+
 CoffeeMachine::CoffeeMachine() {
   // stock all inventory levels to 10 parts each
   for (auto placeholder = ingredientPrices.begin();
@@ -112,6 +171,15 @@ void CoffeeMachine::processInput(std::string userInput) {
   }
 }
 
-void CoffeeMachine::restock() const {
+void CoffeeMachine::makeDrink(DRINKS d) {
+  // TODO(mapope) : add check that the drink has enough ingredients
+  std::cout << "Dispensing: " << drink2string(d)  << std::endl;
+  // get the vector of the ingredients which are needed by the drink
+  auto currentRecipe = recipes.find(d)->second;
+  // remove the ingredients from the inventory
+  for(auto it = currentRecipe.begin(); it != currentRecipe.end(); ++it) {
+    Inventory[*it]--;
+  }
+}
 
 }

@@ -38,7 +38,7 @@ public:
   CoffeeMachine();
   ~CoffeeMachine();
 
-  void makeDrink(Drink *d);
+  void makeDrink(DRINKS d);
   void displayInventory();
   void displayMenu();
   void restock();
