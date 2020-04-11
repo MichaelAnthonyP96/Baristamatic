@@ -182,4 +182,25 @@ void CoffeeMachine::makeDrink(DRINKS d) {
   }
 }
 
+void CoffeeMachine::restock() {
+  for (auto it = Inventory.begin(); it != Inventory.end(); ++it) {
+    // restock all inventory levels to 10 parts each
+    it->second = 10;
+  }
+}
+
+void CoffeeMachine::displayInventory() {
+  std::cout << "Inventory:\n";
+  for (auto it = Inventory.begin(); it != Inventory.end(); ++it) {
+    // display all ingredient names and quantity
+    std::cout << ingredient2string(it->first) << "," << it->second << "\n";
+  }
+  // flush buffer
+  std::cout << std::endl;
+}
+
+void CoffeeMachine::displayMenu() {
+  std::cout << "Menu:\n";
+  // <drink number>,<drink name>,<cost>,<in-stock>
+
 }
