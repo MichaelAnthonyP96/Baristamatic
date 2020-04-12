@@ -31,8 +31,10 @@ class CoffeeMachine {
 public:
   CoffeeMachine();
   ~CoffeeMachine();
-
+  CoffeeMachine(CoffeeMachine const &other);
   void makeDrink(DRINKS d);
+  bool isStocked(Drink &d);
+  double calcPrice(DRINKS d) const;
   void displayInventory();
   void displayMenu();
   void restock();
