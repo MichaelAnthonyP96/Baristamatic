@@ -5,25 +5,18 @@
 #ifndef BARISTAMATIC_INCLUDE_COFFEEMACHINE_H_
 #define BARISTAMATIC_INCLUDE_COFFEEMACHINE_H_
 
-#include <string>
-#include <map>
 #include "Drink.h"
+#include "Inventory.h"
+#include <map>
+#include <string>
+#include <vector>
 
-enum INGREDIENTS {
-  Coffee,
-  DecafCoffee,
-  Sugar,
-  Cream,
-  SteamedMilk,
-  FoamedMilk,
-  Espresso,
-  Cocoa,
-  WhippedCream
-};
+
 
 // TODO(mapope): add namespace to avoid collision between DRINKS::coffee
-// and INGREDIENTS::coffee
+//  and INGREDIENTS::coffee
 
+constexpr auto DRINKS_BEGIN = __LINE__;
 enum DRINKS {
   coffee,
   decafCoffee,
@@ -32,6 +25,7 @@ enum DRINKS {
   caffeeMocha,
   cappuccino
 };
+constexpr auto DRINKS_SIZE = __LINE__ - DRINKS_BEGIN - 3;
 
 class CoffeeMachine {
 public:
@@ -42,10 +36,10 @@ public:
   void displayInventory();
   void displayMenu();
   void restock();
-  void processInput(std::string userInput);
+  void processInput(const std::string& userInput);
 
 private:
-  Drink *drinks;
+  std::vector<Drink> drinks;
   std::map<INGREDIENTS, int> Inventory;
   static const std::map<DRINKS , std::vector<INGREDIENTS>> recipes;
   static const std::map<INGREDIENTS , double> ingredientPrices;
