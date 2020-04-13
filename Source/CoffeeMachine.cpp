@@ -26,15 +26,16 @@ const std::map<INGREDIENTS, double> createPriceMap() {
 std::vector<INGREDIENTS> defineDrink(int numIngredients, ...) {
   std::vector<INGREDIENTS> v;
   va_list vaList;
-  va_start(vaList, numIngredients); //initialize vaList for num number of arguments
+  va_start(vaList, numIngredients); // initialize vaList for num number of arguments
+  // can't pre-allocate vector size, enums are all converted to lowest value
   for (int i = 0; i < numIngredients; ++i) {
     v.push_back(va_arg(vaList, INGREDIENTS));
   }
-  va_end(vaList); //clean memory reserved for vaList
+  va_end(vaList); // clean memory reserved for vaList
   return v;
 }
 
-const std::map<std::string, std::vector<INGREDIENTS> > createDrinks() {
+const std::map<std::string, std::vector<INGREDIENTS>> createDrinks() {
   const std::map<std::string, std::vector<INGREDIENTS>> recipes = {
       {"Coffee", defineDrink(5, INGREDIENTS::Coffee, INGREDIENTS::Coffee,
                              INGREDIENTS::Coffee, INGREDIENTS::Sugar,
@@ -55,6 +56,7 @@ const std::map<std::string, std::vector<INGREDIENTS> > createDrinks() {
       {"Cappuccino",
        defineDrink(4, INGREDIENTS::Espresso, INGREDIENTS::Espresso,
                    INGREDIENTS::SteamedMilk, INGREDIENTS::FoamedMilk)}};
+#define DRINKS_SIZE recipes.size()
   return recipes;
 }
 
@@ -103,9 +105,8 @@ CoffeeMachine::~CoffeeMachine() {
   // delete[] drinks;
 }
 
-CoffeeMachine::CoffeeMachine(CoffeeMachine const &other) {
-
-}
+CoffeeMachine::CoffeeMachine(CoffeeMachine const &other)
+    : drinks(other.drinks), Inventory(other.Inventory) {}
 
 void CoffeeMachine::processInput(const std::string& userInput) {
   if (userInput == "r" || userInput == "R") {
@@ -128,8 +129,6 @@ void CoffeeMachine::processInput(const std::string& userInput) {
     }
   }
 }
-
-// TODO(mapope): create a run function, removing the user code
 
 void CoffeeMachine::makeDrink(long i) {
 
@@ -203,4 +202,16 @@ bool CoffeeMachine::isStocked(Drink &d) {
     }
   }
   return true;
+}
+
+void CoffeeMachine::run() {
+  std::string userInput;
+  do {
+    std::cin >> userInput;
+    std::transform(userInput.begin(), userInput.end(), userInput.begin(),
+                   [](unsigned char c) { return std::tolower(c); });
+    this->processInput(userInput);
+    this->displayInventory();
+    this->displayMenu();
+  } while (true);
 }

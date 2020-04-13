@@ -9,33 +9,24 @@
 /**
  * \brief Default constructor for Drink Class
  */
-Drink::Drink() : price(0.), inStock(false), name("") {}
+Drink::Drink() : price(0.), name("") {}
 
 /**
  * \brief three parameter constructor for Drink Class
  *
- * @param price_
- * @param inStock_
- * @param name_
+ * @param price_ price of the drink being constructed
+ * @param name_ name of the drink, case sensitive
  */
 Drink::Drink(const double price_, std::string name_)
-    : price(price_), name(std::move(name_)), inStock(true) {
+    : price(price_), name(std::move(name_)) {
 }
 
-Drink::Drink(DRINKS d) : price(1.0), name(""), inStock(true) {
-
+std::string Drink::getName() const {
+  return this->name;
 }
 
-const std::string Drink::getName() const { return this->name; }
-
-void Drink::print() const {
-
-}
 const double Drink::getPrice() const {
   return this->price;
-}
-bool Drink::stocked() const {
-  return this->inStock;
 }
 
 void Drink::setRecipe(std::vector<INGREDIENTS> list) {
