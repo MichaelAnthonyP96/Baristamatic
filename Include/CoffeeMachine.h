@@ -78,7 +78,7 @@ public:
   CoffeeMachine();
   ~CoffeeMachine();
   CoffeeMachine(CoffeeMachine const &other);
-  void makeDrink(int i);
+  void makeDrink(long i);
   bool isStocked(Drink &d);
   double calcPrice(std::string drinkName) const;
   void displayInventory();

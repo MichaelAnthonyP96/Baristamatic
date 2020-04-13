@@ -108,16 +108,30 @@ CoffeeMachine::CoffeeMachine(CoffeeMachine const &other) {
 }
 
 void CoffeeMachine::processInput(const std::string& userInput) {
-  if (userInput == "r") {
+  if (userInput == "r" || userInput == "R") {
     this->restock();
-  } else if (userInput == "q") {
+  } else if (userInput == "q"  || userInput == "Q") {
     exit(0);
   } else {
-    this->makeDrink(std::atoi(userInput.c_str()));
+    try {
+      char* end;
+      long attemptedConversion = std::strtol(userInput.c_str(), &end, 10);
+      if(attemptedConversion <= 0 || attemptedConversion >= DRINKS_SIZE) {
+        throw std::out_of_range(
+            "User input is either out of bounds, or an invalid character");
+      }
+      this->makeDrink(attemptedConversion);
+    } catch (...) {
+      std::cout << "Invalid selection: " << userInput << std::endl;
+      this->displayInventory();
+      this->displayMenu();
+    }
   }
 }
 
-void CoffeeMachine::makeDrink(int i) {
+// TODO(mapope): create a run function, removing the user code
+
+void CoffeeMachine::makeDrink(long i) {
 
   if (isStocked(drinks[i-1])) {
     std::cout << "Dispensing: " << drinks[i-1].getName() << std::endl;
@@ -139,6 +153,8 @@ void CoffeeMachine::restock() {
     // restock all inventory levels to 10 parts each
     it->second = 10;
   }
+  this->displayInventory();
+  this->displayMenu();
 }
 
 void CoffeeMachine::displayInventory() {

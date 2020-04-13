@@ -39,7 +39,7 @@ bool Drink::stocked() const {
 }
 
 void Drink::setRecipe(std::vector<INGREDIENTS> list) {
-  // we know everything in the list exists atleast once, we are looking
+  // we know everything in the list exists at-least once, we are looking
   // for duplicates
   int count = 1;
   // it does not need to updated since the list shrinks in size
