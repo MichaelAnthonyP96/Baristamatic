@@ -21,7 +21,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Options
 option(BUILD_SHARED_LIBS "Build shared libraries." ON)
-option(ENABLE_TESTS "Build with tests." ON)
+option(ENABLE_TESTS "Build with tests." OFF)
 option(BUILD_DOCUMENTATION "Create and install the HTML based API documentation (requires Doxygen)" OFF)
 
 # Setting compile and link options #############################################
