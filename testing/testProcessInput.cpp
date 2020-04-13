@@ -140,7 +140,7 @@ TEST(ProcessInput, Q_Quit) {
   std::cout << "After Q user input, verifying that the death was successfully handled" << std::endl;
 }
 
-TEST(ProcessInput, InvalidInput) {
+TEST(ProcessInput, InvalidLetter) {
   CoffeeMachine c;
   testing::internal::CaptureStdout();
   c.processInput("t");
@@ -163,5 +163,31 @@ TEST(ProcessInput, InvalidInput) {
                         "4,Cappuccino,$2.90,true\n"
                         "5,Coffee,$2.75,true\n"
                         "6,Decaf Coffee,$2.75,true\n";
+  EXPECT_EQ(programOutput, expected);
+}
+
+TEST(ProcessInput, InvalidNumber) {
+  CoffeeMachine c;
+  testing::internal::CaptureStdout();
+  c.processInput("10");
+  std::string programOutput = testing::internal::GetCapturedStdout();
+  std::string expected = "Invalid selection: 10\n"
+                         "Inventory:\n"
+                         "Cocoa,10\n"
+                         "Coffee,10\n"
+                         "Cream,10\n"
+                         "Decaf Coffee,10\n"
+                         "Espresso,10\n"
+                         "Foamed Milk,10\n"
+                         "Steamed Milk,10\n"
+                         "Sugar,10\n"
+                         "Whipped Cream,10\n"
+                         "Menu:\n"
+                         "1,Caffe Americano,$3.30,true\n"
+                         "2,Caffe Latte,$2.55,true\n"
+                         "3,Caffe Mocha,$3.35,true\n"
+                         "4,Cappuccino,$2.90,true\n"
+                         "5,Coffee,$2.75,true\n"
+                         "6,Decaf Coffee,$2.75,true\n";
   EXPECT_EQ(programOutput, expected);
 }
