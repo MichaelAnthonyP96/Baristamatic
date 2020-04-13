@@ -203,10 +203,6 @@ void CoffeeMachine::run() {
   // endless loop which will only terminate if the user provides a q or Q
   do {
     std::cin >> userInput;
-    std::transform(userInput.begin(), userInput.end(), userInput.begin(),
-                   [](unsigned char c) { return std::tolower(c); });
     this->processInput(userInput);
-    this->displayInventory();
-    this->displayMenu();
   } while (true);
 }
