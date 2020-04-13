@@ -6,12 +6,14 @@
 #define BARISTAMATIC_INCLUDE_DRINK_H_
 
 #include "Inventory.h"
+#include "DrinkList.h"
 #include <map>
 #include <string>
 
 class Drink {
 public:
   Drink();
+  Drink(DRINKS d);
   ~Drink() = default;
   Drink(Drink const &) = default;
   Drink(const double price, std::string name);

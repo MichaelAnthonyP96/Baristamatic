@@ -28,7 +28,7 @@ TEST(MakeDrink, MakeCoffee) {
 
   EXPECT_EQ(menuAndInventory, expected);
   testing::internal::CaptureStdout();
-  c.makeDrink(DRINKS::coffee);
+  c.makeDrink(5);
   menuAndInventory = testing::internal::GetCapturedStdout();
   expected = "Dispensing: Coffee\n"
              "Inventory:\n"
@@ -77,7 +77,7 @@ TEST(MakeDrink, DecafCoffee) {
 
   EXPECT_EQ(menuAndInventory, expected);
   testing::internal::CaptureStdout();
-  c.makeDrink(DRINKS::decafCoffee);
+  c.makeDrink(6);
   menuAndInventory = testing::internal::GetCapturedStdout();
   expected = "Dispensing: Decaf Coffee\n"
              "Inventory:\n"
@@ -126,7 +126,7 @@ TEST(MakeDrink, CaffeLatte) {
 
   EXPECT_EQ(menuAndInventory, expected);
   testing::internal::CaptureStdout();
-  c.makeDrink(DRINKS::caffeLatte);
+  c.makeDrink(2);
   menuAndInventory = testing::internal::GetCapturedStdout();
   expected = "Dispensing: Caffe Latte\n"
              "Inventory:\n"
@@ -175,7 +175,7 @@ TEST(MakeDrink, CaffeAmericano) {
 
   EXPECT_EQ(menuAndInventory, expected);
   testing::internal::CaptureStdout();
-  c.makeDrink(DRINKS::caffeAmericano);
+  c.makeDrink(1);
   menuAndInventory = testing::internal::GetCapturedStdout();
   expected = "Dispensing: Caffe Americano\n"
              "Inventory:\n"
@@ -224,7 +224,7 @@ TEST(MakeDrink, CaffeMocha) {
 
   EXPECT_EQ(menuAndInventory, expected);
   testing::internal::CaptureStdout();
-  c.makeDrink(DRINKS::caffeeMocha);
+  c.makeDrink(3);
   menuAndInventory = testing::internal::GetCapturedStdout();
   expected = "Dispensing: Caffe Mocha\n"
              "Inventory:\n"
@@ -273,7 +273,7 @@ TEST(MakeDrink, Cappuccino) {
 
   EXPECT_EQ(menuAndInventory, expected);
   testing::internal::CaptureStdout();
-  c.makeDrink(DRINKS::cappuccino);
+  c.makeDrink(4);
   menuAndInventory = testing::internal::GetCapturedStdout();
   expected = "Dispensing: Cappuccino\n"
              "Inventory:\n"

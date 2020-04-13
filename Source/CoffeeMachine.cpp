@@ -3,7 +3,6 @@
 //
 
 #include "CoffeeMachine.h"
-#include "Inventory.h"
 #include <iomanip>
 #include <iostream>
 #include <sstream>
@@ -24,102 +23,49 @@ const std::map<INGREDIENTS, double> createPriceMap() {
   return ingredientPriceMap;
 }
 
-const std::map<DRINKS, std::vector<INGREDIENTS> > createDrinks() {
-  std::vector<INGREDIENTS> coffeeIngredients{
-      INGREDIENTS::Coffee, INGREDIENTS::Coffee, INGREDIENTS::Coffee,
-      INGREDIENTS::Sugar, INGREDIENTS::Cream};
-  std::vector<INGREDIENTS> decafCoffeeIngredients{
-      INGREDIENTS::DecafCoffee, INGREDIENTS::DecafCoffee,
-      INGREDIENTS::DecafCoffee, INGREDIENTS::Sugar, INGREDIENTS::Cream};
-  std::vector<INGREDIENTS> caffeeLatteeIngredients{
-      INGREDIENTS::Espresso, INGREDIENTS::Espresso, INGREDIENTS::SteamedMilk};
-  std::vector<INGREDIENTS> caffeeAmericanoIngredients{
-      INGREDIENTS::Espresso, INGREDIENTS::Espresso, INGREDIENTS::Espresso};
-  std::vector<INGREDIENTS> caffeeMochaIngredients{
-      INGREDIENTS::Espresso, INGREDIENTS::Cocoa, INGREDIENTS::SteamedMilk,
-      INGREDIENTS::WhippedCream};
-  std::vector<INGREDIENTS> cappucinoIngredients{
-      INGREDIENTS::Espresso, INGREDIENTS::Espresso, INGREDIENTS::SteamedMilk,
-      INGREDIENTS::FoamedMilk};
+std::vector<INGREDIENTS> defineDrink(int numIngredients, ...) {
+  std::vector<INGREDIENTS> v;
+  va_list vaList;
+  va_start(vaList, numIngredients); //initialize vaList for num number of arguments
+  for (int i = 0; i < numIngredients; ++i) {
+    v.push_back(va_arg(vaList, INGREDIENTS));
+  }
+  va_end(vaList); //clean memory reserved for vaList
+  return v;
+}
 
-  const std::map<DRINKS, std::vector<INGREDIENTS>> recipes = {
-      {DRINKS::coffee, coffeeIngredients},
-      {DRINKS::decafCoffee, decafCoffeeIngredients},
-      {DRINKS::caffeLatte, caffeeLatteeIngredients},
-      {DRINKS::caffeAmericano, caffeeAmericanoIngredients},
-      {DRINKS::caffeeMocha, caffeeMochaIngredients},
-      {DRINKS::cappuccino, cappucinoIngredients}
-      };
+const std::map<std::string, std::vector<INGREDIENTS> > createDrinks() {
+  const std::map<std::string, std::vector<INGREDIENTS>> recipes = {
+      {"Coffee", defineDrink(5, INGREDIENTS::Coffee, INGREDIENTS::Coffee,
+                             INGREDIENTS::Coffee, INGREDIENTS::Sugar,
+                             INGREDIENTS::Cream)},
+      {"Decaf Coffee",
+       defineDrink(5, INGREDIENTS::DecafCoffee, INGREDIENTS::DecafCoffee,
+                   INGREDIENTS::DecafCoffee, INGREDIENTS::Sugar,
+                   INGREDIENTS::Cream)},
+      {"Caffe Latte",
+       defineDrink(3, INGREDIENTS::Espresso, INGREDIENTS::Espresso,
+                   INGREDIENTS::SteamedMilk)},
+      {"Caffe Americano",
+       defineDrink(3, INGREDIENTS::Espresso, INGREDIENTS::Espresso,
+                   INGREDIENTS::Espresso)},
+      {"Caffe Mocha",
+       defineDrink(4, INGREDIENTS::Espresso, INGREDIENTS::Cocoa,
+                   INGREDIENTS::SteamedMilk, INGREDIENTS::WhippedCream)},
+      {"Cappuccino",
+       defineDrink(4, INGREDIENTS::Espresso, INGREDIENTS::Espresso,
+                   INGREDIENTS::SteamedMilk, INGREDIENTS::FoamedMilk)}};
   return recipes;
 }
 
-const std::map<DRINKS, std::vector<INGREDIENTS>> CoffeeMachine::recipes = createDrinks();
+const std::map<std::string, std::vector<INGREDIENTS>> CoffeeMachine::recipes = createDrinks();
 
 const std::map<INGREDIENTS, double> CoffeeMachine::ingredientPrices =
     createPriceMap();
 
-std::string drink2string(DRINKS d) {
-  switch (d) {
-  case DRINKS::coffee: {
-    return "Coffee";
-  }
-  case DRINKS::decafCoffee: {
-    return "Decaf Coffee";
-  }
-  case DRINKS::caffeLatte: {
-    return "Caffe Latte";
-  }
-  case DRINKS::caffeAmericano: {
-    return "Caffe Americano";
-  }
-  case DRINKS::caffeeMocha: {
-    return "Caffe Mocha";
-  }
-  case DRINKS::cappuccino: {
-    return "Cappuccino";
-  }
-  default:
-    throw std::exception();
-  }
-}
-
-std::string ingredient2string(INGREDIENTS i) {
-  switch (i) {
-  case INGREDIENTS::Coffee: {
-    return "Coffee";
-  }
-  case INGREDIENTS::DecafCoffee: {
-    return "Decaf Coffee";
-  }
-  case INGREDIENTS::WhippedCream: {
-    return "Whipped Cream";
-  }
-  case INGREDIENTS::Cocoa: {
-    return "Cocoa";
-  }
-  case INGREDIENTS::Espresso: {
-    return "Espresso";
-  }
-  case INGREDIENTS::Sugar: {
-    return "Sugar";
-  }
-  case INGREDIENTS::Cream: {
-    return "Cream";
-  }
-  case INGREDIENTS::SteamedMilk: {
-    return "Steamed Milk";
-  }
-  case INGREDIENTS::FoamedMilk: {
-    return "Foamed Milk";
-  }
-  default:
-    throw std::exception();
-  }
-}
-
-double CoffeeMachine::calcPrice(DRINKS d) const {
+double CoffeeMachine::calcPrice(std::string drinkName) const {
   double price = 0.;
-  auto currentRecipe = recipes.find(d)->second;
+  auto currentRecipe = recipes.find(drinkName)->second;
   for (auto &&it : currentRecipe) {
     price += ingredientPrices.find(it)->second;
   }
@@ -133,18 +79,18 @@ CoffeeMachine::CoffeeMachine() {
     Inventory.insert(std::pair<INGREDIENTS, int>(placeholder->first, 10));
   }
   // iterate over DRINKS enum, create drinks obj for each
-//  std::vector<std::string> tempVec(DRINKS_SIZE);
-//  int idx = 0;
-//  for (auto it = recipes.begin(); it != recipes.end(); ++it, ++idx) {
-//    tempVec[idx] = drink2string(it->first);
-//  }
-//  std::sort(tempVec.begin(), tempVec.end());
+  std::vector<std::string> tempVec(DRINKS_SIZE);
+  int idx = 0;
+  for (auto it = recipes.begin(); it != recipes.end(); ++it, ++idx) {
+    tempVec[idx] = it->first;
+  }
+  std::sort(tempVec.begin(), tempVec.end());
 
   // cannot pre-reserve vec size and use assignment operator because price and
   // name variables are named const
-  int idx = 0;
+  idx = 0;
   for (auto it = recipes.begin(); it != recipes.end(); ++it, ++idx) {
-    this->drinks.emplace_back(Drink(calcPrice(it->first), drink2string(it->first)));
+    this->drinks.emplace_back(Drink(calcPrice(it->first), it->first));
     this->drinks[idx].setRecipe(it->second);
   }
 
@@ -167,56 +113,24 @@ void CoffeeMachine::processInput(const std::string& userInput) {
   } else if (userInput == "q") {
     exit(0);
   } else {
-    switch (std::atoi(userInput.c_str())) {
-    case 1: {
-      this->makeDrink(DRINKS::coffee);
-      break;
-    }
-    case 2: {
-      this->makeDrink(DRINKS::decafCoffee);
-      break;
-    }
-    case 3: {
-      this->makeDrink(DRINKS::caffeLatte);
-      break;
-    }
-    case 4: {
-      this->makeDrink(DRINKS::caffeAmericano);
-      break;
-    }
-    case 5: {
-      this->makeDrink(DRINKS::caffeeMocha);
-      break;
-    }
-    case 6: {
-      this->makeDrink(DRINKS::cappuccino);
-      break;
-    }
-    default:
-      // TODO(mapope): determine if string input is a valid number
-      std::cout << "Invalid selection: " << userInput << std::endl;
-    }
+    this->makeDrink(std::atoi(userInput.c_str()));
   }
 }
 
-void CoffeeMachine::makeDrink(DRINKS d) {
-  std::string myString = drink2string(d);
-  auto it =
-      find_if(drinks.begin(), drinks.end(), [&myString](const Drink &obj) {
-        return obj.getName() == myString;
-      });
-  if (isStocked(*it)) {
-    std::cout << "Dispensing: " << drink2string(d) << std::endl;
+void CoffeeMachine::makeDrink(int i) {
+
+  if (isStocked(drinks[i-1])) {
+    std::cout << "Dispensing: " << drinks[i-1].getName() << std::endl;
     // get the vector of the ingredients which are needed by the drink
-    auto currentRecipe = recipes.find(d)->second;
+    auto currentRecipe = drinks[i-1].getRecipe();
     // remove the ingredients from the inventory
     for (auto it = currentRecipe.begin(); it != currentRecipe.end(); ++it) {
-      Inventory[*it]--;
+      Inventory[it->first] -= it->second;
     }
     this->displayInventory();
     this->displayMenu();
   } else {
-    std::cout << "Out of stock: " << drink2string(d) << std::endl;
+    std::cout << "Out of stock: " << drinks[i-1].getName() << std::endl;
   }
 }
 

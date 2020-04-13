@@ -3,7 +3,6 @@
 //
 
 #include "Drink.h"
-#include <iostream>
 #include <utility>
 #include <vector>
 
@@ -21,6 +20,10 @@ Drink::Drink() : price(0.), inStock(false), name("") {}
  */
 Drink::Drink(const double price_, std::string name_)
     : price(price_), name(std::move(name_)), inStock(true) {
+}
+
+Drink::Drink(DRINKS d) : price(1.0), name(""), inStock(true) {
+
 }
 
 const std::string Drink::getName() const { return this->name; }
