@@ -52,17 +52,19 @@ set(CMAKE_CXX_STANDARD 14)
 
 include(GNUInstallDirs)
 
-# TODO(mapope): separate coffeMachine and Drinks libraries
 add_library(Drinks
-        ${CMAKE_CURRENT_SOURCE_DIR}/Source/Drink.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/Source/CoffeeMachine.cpp
-        )
+        ${CMAKE_CURRENT_SOURCE_DIR}/Source/Drink.cpp)
 target_include_directories(Drinks PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Include>)
 
-add_executable(runCoffeeMaker ${CMAKE_CURRENT_SOURCE_DIR}/Source/main.cpp)
-target_link_libraries(runCoffeeMaker PUBLIC Drinks)
+add_library(CoffeeMachine
+        ${CMAKE_CURRENT_SOURCE_DIR}/Source/CoffeeMachine.cpp)
+target_include_directories(CoffeeMachine PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Include>)
+target_link_libraries(CoffeeMachine PUBLIC Drinks)
 
+add_executable(runCoffeeMaker ${CMAKE_CURRENT_SOURCE_DIR}/Source/main.cpp)
+target_link_libraries(runCoffeeMaker PUBLIC Drinks CoffeeMachine)
 
 if(ENABLE_TESTS)
     enable_testing()
@@ -92,5 +94,5 @@ if(BUILD_DOCUMENTATION)
             DEPENDS ${doxyfile} ${doxy_extra_files}
             COMMENT "Generating documentation")
     add_custom_target(docs ALL DEPENDS ${documentation})
-    install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/docs DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/Lab_BARISTAMATIC)
+    install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/docs DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/BARISTAMATIC)
 endif()
