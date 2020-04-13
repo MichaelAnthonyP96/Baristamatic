@@ -191,3 +191,346 @@ TEST(ProcessInput, InvalidNumber) {
                          "6,Decaf Coffee,$2.75,true\n";
   EXPECT_EQ(programOutput, expected);
 }
+
+TEST(ProcessInput, 1) {
+
+  testing::internal::CaptureStdout();
+  CoffeeMachine c;
+  std::string menuAndInventory = testing::internal::GetCapturedStdout();
+  std::string expected =
+      "Inventory:\n"
+      "Cocoa,10\n"
+      "Coffee,10\n"
+      "Cream,10\n"
+      "Decaf Coffee,10\n"
+      "Espresso,10\n"
+      "Foamed Milk,10\n"
+      "Steamed Milk,10\n"
+      "Sugar,10\n"
+      "Whipped Cream,10\n"
+      "Menu:\n"
+      "1,Caffe Americano,$3.30,true\n"
+      "2,Caffe Latte,$2.55,true\n"
+      "3,Caffe Mocha,$3.35,true\n"
+      "4,Cappuccino,$2.90,true\n"
+      "5,Coffee,$2.75,true\n"
+      "6,Decaf Coffee,$2.75,true\n";
+
+  EXPECT_EQ(menuAndInventory, expected);
+  testing::internal::CaptureStdout();
+  c.processInput("1");
+  menuAndInventory = testing::internal::GetCapturedStdout();
+  expected = "Dispensing: Caffe Americano\n"
+             "Inventory:\n"
+             "Cocoa,10\n"
+             "Coffee,10\n"
+             "Cream,10\n"
+             "Decaf Coffee,10\n"
+             "Espresso,7\n"
+             "Foamed Milk,10\n"
+             "Steamed Milk,10\n"
+             "Sugar,10\n"
+             "Whipped Cream,10\n"
+             "Menu:\n"
+             "1,Caffe Americano,$3.30,true\n"
+             "2,Caffe Latte,$2.55,true\n"
+             "3,Caffe Mocha,$3.35,true\n"
+             "4,Cappuccino,$2.90,true\n"
+             "5,Coffee,$2.75,true\n"
+             "6,Decaf Coffee,$2.75,true\n";
+  EXPECT_EQ(menuAndInventory, expected);
+}
+
+TEST(MakeDrink, 2) {
+
+  testing::internal::CaptureStdout();
+  CoffeeMachine c;
+  std::string menuAndInventory = testing::internal::GetCapturedStdout();
+  std::string expected =
+      "Inventory:\n"
+      "Cocoa,10\n"
+      "Coffee,10\n"
+      "Cream,10\n"
+      "Decaf Coffee,10\n"
+      "Espresso,10\n"
+      "Foamed Milk,10\n"
+      "Steamed Milk,10\n"
+      "Sugar,10\n"
+      "Whipped Cream,10\n"
+      "Menu:\n"
+      "1,Caffe Americano,$3.30,true\n"
+      "2,Caffe Latte,$2.55,true\n"
+      "3,Caffe Mocha,$3.35,true\n"
+      "4,Cappuccino,$2.90,true\n"
+      "5,Coffee,$2.75,true\n"
+      "6,Decaf Coffee,$2.75,true\n";
+
+  EXPECT_EQ(menuAndInventory, expected);
+  testing::internal::CaptureStdout();
+  c.processInput("2");
+  menuAndInventory = testing::internal::GetCapturedStdout();
+  expected = "Dispensing: Caffe Latte\n"
+             "Inventory:\n"
+             "Cocoa,10\n"
+             "Coffee,10\n"
+             "Cream,10\n"
+             "Decaf Coffee,10\n"
+             "Espresso,8\n"
+             "Foamed Milk,10\n"
+             "Steamed Milk,9\n"
+             "Sugar,10\n"
+             "Whipped Cream,10\n"
+             "Menu:\n"
+             "1,Caffe Americano,$3.30,true\n"
+             "2,Caffe Latte,$2.55,true\n"
+             "3,Caffe Mocha,$3.35,true\n"
+             "4,Cappuccino,$2.90,true\n"
+             "5,Coffee,$2.75,true\n"
+             "6,Decaf Coffee,$2.75,true\n";
+  EXPECT_EQ(menuAndInventory, expected);
+}
+
+TEST(ProcessInput, 3) {
+
+  testing::internal::CaptureStdout();
+  CoffeeMachine c;
+  std::string menuAndInventory = testing::internal::GetCapturedStdout();
+  std::string expected =
+      "Inventory:\n"
+      "Cocoa,10\n"
+      "Coffee,10\n"
+      "Cream,10\n"
+      "Decaf Coffee,10\n"
+      "Espresso,10\n"
+      "Foamed Milk,10\n"
+      "Steamed Milk,10\n"
+      "Sugar,10\n"
+      "Whipped Cream,10\n"
+      "Menu:\n"
+      "1,Caffe Americano,$3.30,true\n"
+      "2,Caffe Latte,$2.55,true\n"
+      "3,Caffe Mocha,$3.35,true\n"
+      "4,Cappuccino,$2.90,true\n"
+      "5,Coffee,$2.75,true\n"
+      "6,Decaf Coffee,$2.75,true\n";
+
+  EXPECT_EQ(menuAndInventory, expected);
+  testing::internal::CaptureStdout();
+  c.processInput("3");
+  menuAndInventory = testing::internal::GetCapturedStdout();
+  expected = "Dispensing: Caffe Mocha\n"
+             "Inventory:\n"
+             "Cocoa,9\n"
+             "Coffee,10\n"
+             "Cream,10\n"
+             "Decaf Coffee,10\n"
+             "Espresso,9\n"
+             "Foamed Milk,10\n"
+             "Steamed Milk,9\n"
+             "Sugar,10\n"
+             "Whipped Cream,9\n"
+             "Menu:\n"
+             "1,Caffe Americano,$3.30,true\n"
+             "2,Caffe Latte,$2.55,true\n"
+             "3,Caffe Mocha,$3.35,true\n"
+             "4,Cappuccino,$2.90,true\n"
+             "5,Coffee,$2.75,true\n"
+             "6,Decaf Coffee,$2.75,true\n";
+  EXPECT_EQ(menuAndInventory, expected);
+}
+
+TEST(ProcessInput, 4) {
+
+  testing::internal::CaptureStdout();
+  CoffeeMachine c;
+  std::string menuAndInventory = testing::internal::GetCapturedStdout();
+  std::string expected =
+      "Inventory:\n"
+      "Cocoa,10\n"
+      "Coffee,10\n"
+      "Cream,10\n"
+      "Decaf Coffee,10\n"
+      "Espresso,10\n"
+      "Foamed Milk,10\n"
+      "Steamed Milk,10\n"
+      "Sugar,10\n"
+      "Whipped Cream,10\n"
+      "Menu:\n"
+      "1,Caffe Americano,$3.30,true\n"
+      "2,Caffe Latte,$2.55,true\n"
+      "3,Caffe Mocha,$3.35,true\n"
+      "4,Cappuccino,$2.90,true\n"
+      "5,Coffee,$2.75,true\n"
+      "6,Decaf Coffee,$2.75,true\n";
+
+  EXPECT_EQ(menuAndInventory, expected);
+  testing::internal::CaptureStdout();
+  c.processInput("4");
+  menuAndInventory = testing::internal::GetCapturedStdout();
+  expected = "Dispensing: Cappuccino\n"
+             "Inventory:\n"
+             "Cocoa,10\n"
+             "Coffee,10\n"
+             "Cream,10\n"
+             "Decaf Coffee,10\n"
+             "Espresso,8\n"
+             "Foamed Milk,9\n"
+             "Steamed Milk,9\n"
+             "Sugar,10\n"
+             "Whipped Cream,10\n"
+             "Menu:\n"
+             "1,Caffe Americano,$3.30,true\n"
+             "2,Caffe Latte,$2.55,true\n"
+             "3,Caffe Mocha,$3.35,true\n"
+             "4,Cappuccino,$2.90,true\n"
+             "5,Coffee,$2.75,true\n"
+             "6,Decaf Coffee,$2.75,true\n";
+  EXPECT_EQ(menuAndInventory, expected);
+}
+
+TEST(ProcessInput, 5) {
+
+  testing::internal::CaptureStdout();
+  CoffeeMachine c;
+  std::string menuAndInventory = testing::internal::GetCapturedStdout();
+  std::string expected =
+      "Inventory:\n"
+      "Cocoa,10\n"
+      "Coffee,10\n"
+      "Cream,10\n"
+      "Decaf Coffee,10\n"
+      "Espresso,10\n"
+      "Foamed Milk,10\n"
+      "Steamed Milk,10\n"
+      "Sugar,10\n"
+      "Whipped Cream,10\n"
+      "Menu:\n"
+      "1,Caffe Americano,$3.30,true\n"
+      "2,Caffe Latte,$2.55,true\n"
+      "3,Caffe Mocha,$3.35,true\n"
+      "4,Cappuccino,$2.90,true\n"
+      "5,Coffee,$2.75,true\n"
+      "6,Decaf Coffee,$2.75,true\n";
+
+  EXPECT_EQ(menuAndInventory, expected);
+  testing::internal::CaptureStdout();
+  c.processInput("5");
+  menuAndInventory = testing::internal::GetCapturedStdout();
+  expected = "Dispensing: Coffee\n"
+             "Inventory:\n"
+             "Cocoa,10\n"
+             "Coffee,7\n"
+             "Cream,9\n"
+             "Decaf Coffee,10\n"
+             "Espresso,10\n"
+             "Foamed Milk,10\n"
+             "Steamed Milk,10\n"
+             "Sugar,9\n"
+             "Whipped Cream,10\n"
+             "Menu:\n"
+             "1,Caffe Americano,$3.30,true\n"
+             "2,Caffe Latte,$2.55,true\n"
+             "3,Caffe Mocha,$3.35,true\n"
+             "4,Cappuccino,$2.90,true\n"
+             "5,Coffee,$2.75,true\n"
+             "6,Decaf Coffee,$2.75,true\n";
+  EXPECT_EQ(menuAndInventory, expected);
+}
+
+TEST(ProcessInput, 6) {
+
+  testing::internal::CaptureStdout();
+  CoffeeMachine c;
+  std::string menuAndInventory = testing::internal::GetCapturedStdout();
+  std::string expected =
+      "Inventory:\n"
+      "Cocoa,10\n"
+      "Coffee,10\n"
+      "Cream,10\n"
+      "Decaf Coffee,10\n"
+      "Espresso,10\n"
+      "Foamed Milk,10\n"
+      "Steamed Milk,10\n"
+      "Sugar,10\n"
+      "Whipped Cream,10\n"
+      "Menu:\n"
+      "1,Caffe Americano,$3.30,true\n"
+      "2,Caffe Latte,$2.55,true\n"
+      "3,Caffe Mocha,$3.35,true\n"
+      "4,Cappuccino,$2.90,true\n"
+      "5,Coffee,$2.75,true\n"
+      "6,Decaf Coffee,$2.75,true\n";
+
+  EXPECT_EQ(menuAndInventory, expected);
+  testing::internal::CaptureStdout();
+  c.processInput("6");
+  menuAndInventory = testing::internal::GetCapturedStdout();
+  expected = "Dispensing: Decaf Coffee\n"
+             "Inventory:\n"
+             "Cocoa,10\n"
+             "Coffee,10\n"
+             "Cream,9\n"
+             "Decaf Coffee,7\n"
+             "Espresso,10\n"
+             "Foamed Milk,10\n"
+             "Steamed Milk,10\n"
+             "Sugar,9\n"
+             "Whipped Cream,10\n"
+             "Menu:\n"
+             "1,Caffe Americano,$3.30,true\n"
+             "2,Caffe Latte,$2.55,true\n"
+             "3,Caffe Mocha,$3.35,true\n"
+             "4,Cappuccino,$2.90,true\n"
+             "5,Coffee,$2.75,true\n"
+             "6,Decaf Coffee,$2.75,true\n";
+  EXPECT_EQ(menuAndInventory, expected);
+}
+
+TEST(ProcessInput, 7) {
+
+  testing::internal::CaptureStdout();
+  CoffeeMachine c;
+  std::string menuAndInventory = testing::internal::GetCapturedStdout();
+  std::string expected =
+      "Inventory:\n"
+      "Cocoa,10\n"
+      "Coffee,10\n"
+      "Cream,10\n"
+      "Decaf Coffee,10\n"
+      "Espresso,10\n"
+      "Foamed Milk,10\n"
+      "Steamed Milk,10\n"
+      "Sugar,10\n"
+      "Whipped Cream,10\n"
+      "Menu:\n"
+      "1,Caffe Americano,$3.30,true\n"
+      "2,Caffe Latte,$2.55,true\n"
+      "3,Caffe Mocha,$3.35,true\n"
+      "4,Cappuccino,$2.90,true\n"
+      "5,Coffee,$2.75,true\n"
+      "6,Decaf Coffee,$2.75,true\n";
+
+  EXPECT_EQ(menuAndInventory, expected);
+  testing::internal::CaptureStdout();
+  c.processInput("7");
+  menuAndInventory = testing::internal::GetCapturedStdout();
+  expected = "Invalid selection: 7\n"
+             "Inventory:\n"
+             "Cocoa,10\n"
+             "Coffee,10\n"
+             "Cream,10\n"
+             "Decaf Coffee,10\n"
+             "Espresso,10\n"
+             "Foamed Milk,10\n"
+             "Steamed Milk,10\n"
+             "Sugar,10\n"
+             "Whipped Cream,10\n"
+             "Menu:\n"
+             "1,Caffe Americano,$3.30,true\n"
+             "2,Caffe Latte,$2.55,true\n"
+             "3,Caffe Mocha,$3.35,true\n"
+             "4,Cappuccino,$2.90,true\n"
+             "5,Coffee,$2.75,true\n"
+             "6,Decaf Coffee,$2.75,true\n";
+  EXPECT_EQ(menuAndInventory, expected);
+}

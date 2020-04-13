@@ -6,17 +6,11 @@
 #include <utility>
 #include <vector>
 
-/**
- * \brief Default constructor for Drink Class
- */
 Drink::Drink() : price(0.), name("") {}
 
-/**
- * \brief three parameter constructor for Drink Class
- *
- * @param price_ price of the drink being constructed
- * @param name_ name of the drink, case sensitive
- */
+Drink::Drink(Drink const &other)
+    : price(other.price), name(other.name), recipe(other.recipe) {}
+
 Drink::Drink(const double price_, std::string name_)
     : price(price_), name(std::move(name_)) {
 }
@@ -38,9 +32,11 @@ void Drink::setRecipe(std::vector<INGREDIENTS> list) {
     // search for another instance of the current ingredient
     auto search = std::find(it+1, list.end(), *it);
     if (search != list.end()) {
+      // found another instance of current ingredient
       ++count;
       list.erase(search);
     } else {
+      // no more other instances of current ingredient, add it to Hash Table
       this->recipe.insert(std::pair<INGREDIENTS, int>(*it, count));
       list.erase(it);
       count = 1;
@@ -51,3 +47,4 @@ void Drink::setRecipe(std::vector<INGREDIENTS> list) {
 std::map<INGREDIENTS, int> Drink::getRecipe() {
   return this->recipe;
 }
+
